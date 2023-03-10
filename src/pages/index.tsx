@@ -34,7 +34,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   query: { name, page, sort },
 }) => {
   if (name && name.length) {
-    console.log(sort);
     const {
       data: { items, total_count },
     } = await axios.get("https://api.github.com/search/repositories", {
