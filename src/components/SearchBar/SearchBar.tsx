@@ -18,6 +18,7 @@ import SearcherContext from "@/store/context/SearcherContext";
 const SearchBar = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { updateRouter, setIsLoading } = useContext(SearcherContext);
   const router = useRouter();
@@ -38,15 +39,19 @@ const SearchBar = () => {
   }, [debouncedInputValue]);
 
   const handleSearch = (optionName: string = "") => {
-    setInputValue((previousInputValue) =>
-      optionName.length ? optionName : previousInputValue
-    );
-    updateRouter(router, {
-      name: optionName.length ? optionName : inputValue,
-      page: 1,
-    });
-    setOpen(false);
-    setIsLoading(true);
+    if (inputValue.length > MIN_INPUT_LENGTH) {
+      setInputValue((previousInputValue) =>
+        optionName.length ? optionName : previousInputValue
+      );
+      updateRouter(router, {
+        name: optionName.length ? optionName : inputValue,
+        page: 1,
+      });
+      setOpen(false);
+      setIsLoading(true);
+      return;
+    }
+    setShowErrorMessage(true);
   };
 
   const handleChange = (
@@ -55,12 +60,16 @@ const SearchBar = () => {
     reason: AutocompleteInputChangeReason
   ): void => {
     const normalizedValue = value.trim();
-    value.length <= MIN_INPUT_LENGTH && setOpen(false);
+    normalizedValue.length <= MIN_INPUT_LENGTH && setOpen(false);
+    !normalizedValue.length && setShowErrorMessage(false);
 
     switch (reason) {
       case "input":
         setInputValue(normalizedValue);
-        value.length > MIN_INPUT_LENGTH && setSearchTerm(normalizedValue);
+        if (value.length > MIN_INPUT_LENGTH) {
+          setSearchTerm(normalizedValue);
+          setShowErrorMessage(false);
+        }
         break;
       case "reset":
         handleSearch();
@@ -85,50 +94,57 @@ const SearchBar = () => {
 
   return (
     <div className={styles.searchbar}>
-      <Autocomplete
-        options={repositoryOptions}
-        renderOption={(props, option) => (
-          <li
-            {...props}
-            key={option.id}
-            onClick={() => handleSearch(option.name)}
-          >
-            {option.name}
-          </li>
-        )}
-        getOptionLabel={(repository) =>
-          (repository as RepositoryOptions).name || inputValue
-        }
-        size="small"
-        freeSolo
-        open={open}
-        onOpen={handleOpen}
-        onClose={() => setOpen(false)}
-        onInputChange={handleChange}
-        inputValue={inputValue}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
-            handleSearch();
+      <div className={styles["searchbar__container"]}>
+        <Autocomplete
+          options={repositoryOptions}
+          renderOption={(props, option) => (
+            <li
+              {...props}
+              key={option.id}
+              onClick={() => handleSearch(option.name)}
+            >
+              {option.name}
+            </li>
+          )}
+          getOptionLabel={(repository) =>
+            (repository as RepositoryOptions).name || inputValue
           }
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            placeholder="Search repository..."
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  <IconButton size="small" onClick={() => handleSearch()}>
-                    <SearchIcon />
-                  </IconButton>
-                  {params.InputProps.endAdornment}
-                </>
-              ),
-            }}
-          />
+          size="small"
+          freeSolo
+          open={open}
+          onOpen={handleOpen}
+          onClose={() => setOpen(false)}
+          onInputChange={handleChange}
+          inputValue={inputValue}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              handleSearch();
+            }
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              placeholder="Search repository..."
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    <IconButton size="small" onClick={() => handleSearch()}>
+                      <SearchIcon />
+                    </IconButton>
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              }}
+            />
+          )}
+        />
+        {showErrorMessage && (
+          <p className={styles["searchbar__error-message"]}>
+            It should contain at least 3 characters
+          </p>
         )}
-      />
+      </div>
     </div>
   );
 };

@@ -5,10 +5,6 @@
   padding-bottom: 2rem;
 
   &__searchbar {
-    @include display-flex();
-  }
-
-  &__container-theme {
-    @include display-flex();
+    @include display-flex(inline, inline);
   }
 }

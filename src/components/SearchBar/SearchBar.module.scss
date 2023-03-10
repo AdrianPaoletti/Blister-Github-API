@@ -1,3 +1,14 @@
+@import "src/styles/mixins";
+
 .searchbar {
   margin: 0 2rem;
+
+  &__container {
+    @include display-flex(inline, inline, column);
+  }
+  &__error-message {
+    color: red;
+    font-size: 1rem;
+    padding-top: 0.5rem;
+  }
 }
