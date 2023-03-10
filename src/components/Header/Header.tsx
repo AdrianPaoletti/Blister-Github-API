@@ -1,6 +1,5 @@
 import styles from "./Header.module.scss";
 import SearchBar from "../SearchBar/SearchBar";
-import { Select, MenuItem } from "@mui/material";
 
 const Header = () => {
   return (

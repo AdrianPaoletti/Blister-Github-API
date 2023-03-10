@@ -1,3 +1,5 @@
+@import "src/styles/variables";
+
 @font-face {
   font-family: "Mona Sans";
   src: url("../../public/fonts/Mona-Sans.woff2")
@@ -31,6 +33,15 @@ body {
   font-size: 1.4rem;
   padding: 3rem;
   box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    width: 0.7rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2rem;
+    background-color: $color-orange;
+  }
 }
 
 blockquote {
