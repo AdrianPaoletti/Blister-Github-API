@@ -69,7 +69,7 @@
   }
 }
 
-@media (max-width: 1560px) {
+@media (max-width: 1810px) {
   .repository-list {
     &__cards {
       grid-template-columns: repeat(3, 1fr);
@@ -84,7 +84,7 @@
   }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1400px) {
   .repository-list {
     &__cards {
       grid-template-columns: repeat(2, 1fr);
