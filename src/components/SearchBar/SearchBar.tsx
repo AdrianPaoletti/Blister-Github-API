@@ -15,7 +15,10 @@ import { RepositoryOptions } from "@/models/repository";
 import { MIN_INPUT_LENGTH } from "@/utils/constants";
 import SearcherContext from "@/store/context/SearcherContext";
 
-const SearchBar = () => {
+interface SearchBarProps {
+  sortValue: string;
+}
+const SearchBar = ({ sortValue }: SearchBarProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
@@ -43,9 +46,10 @@ const SearchBar = () => {
       setInputValue((previousInputValue) =>
         optionName.length ? optionName : previousInputValue
       );
-      updateRouter(router, {
+      updateRouter({
         name: optionName.length ? optionName : inputValue,
         page: 1,
+        sort: sortValue,
       });
       setOpen(false);
       setIsLoading(true);
@@ -71,12 +75,9 @@ const SearchBar = () => {
           setShowErrorMessage(false);
         }
         break;
-      case "reset":
-        handleSearch();
-        break;
       case "clear":
         setInputValue("");
-        updateRouter(router, { name: "", page: "" });
+        updateRouter({ name: "", page: "", sort: "" });
         break;
       default:
         setInputValue("");
@@ -109,6 +110,7 @@ const SearchBar = () => {
           getOptionLabel={(repository) =>
             (repository as RepositoryOptions).name || inputValue
           }
+          ListboxProps={{ className: "searchbar__list-box" }}
           size="small"
           freeSolo
           open={open}

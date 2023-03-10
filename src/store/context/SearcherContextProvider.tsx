@@ -1,4 +1,4 @@
-import { NextRouter } from "next/router";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import SearcherContext from "./SearcherContext";
 
@@ -10,14 +10,13 @@ const SearcherContextProvider = ({
   children,
 }: SearcherContextProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
-  const updateRouter = (
-    router: NextRouter,
-    queryParams: {
-      name?: string;
-      page?: number | string;
-    }
-  ) => {
+  const updateRouter = (queryParams: {
+    name?: string;
+    page?: number | string;
+    sort?: string;
+  }) => {
     router.push({
       pathname: "/",
       query: { ...router.query, ...queryParams },

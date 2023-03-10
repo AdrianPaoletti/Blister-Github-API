@@ -31,13 +31,14 @@ const HomePage = ({ repositories, totalPages }: HomePageProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({
-  query: { name, page },
+  query: { name, page, sort },
 }) => {
   if (name && name.length) {
+    console.log(sort);
     const {
       data: { items, total_count },
     } = await axios.get("https://api.github.com/search/repositories", {
-      params: { q: name, per_page: LIST_SIZE_PAGE, page },
+      params: { q: name, per_page: LIST_SIZE_PAGE, page, sort },
     });
     return {
       props: {

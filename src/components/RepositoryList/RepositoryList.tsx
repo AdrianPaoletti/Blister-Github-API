@@ -1,8 +1,8 @@
 import moment from "moment";
-import CollectionsBookmarkOutlinedIcon from "@mui/icons-material/CollectionsBookmarkOutlined";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { CircularProgress, Pagination } from "@mui/material";
 import { useRouter } from "next/router";
+import CollectionsBookmarkOutlinedIcon from "@mui/icons-material/CollectionsBookmarkOutlined";
+import { CircularProgress, Pagination } from "@mui/material";
 
 import { Repository } from "@/models/repository";
 import RepositoryCard from "../RepositoryCard/RepositoryCard";
@@ -25,7 +25,7 @@ const RepositoryList = ({ repositories, totalPages }: RepositoryListProps) => {
   useEffect(() => {
     setIsLoading(false);
     const queryPage = router.query?.page;
-    if (queryPage && queryPage.length) {
+    if (queryPage?.length && Number(queryPage)) {
       const x = +queryPage;
       setPage(x);
     }
@@ -33,7 +33,7 @@ const RepositoryList = ({ repositories, totalPages }: RepositoryListProps) => {
 
   const handleChange = (event: ChangeEvent<unknown>, page: number) => {
     setIsLoading(true);
-    updateRouter(router, { page });
+    updateRouter({ page });
     setPage(page);
   };
 

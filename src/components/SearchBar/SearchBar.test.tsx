@@ -20,7 +20,7 @@ describe("Given a SearchBar component", () => {
           value={{ updateRouter, isLoading, setIsLoading }}
         >
           <Provider store={store}>
-            <SearchBar />
+            <SearchBar sortValue="stars" />
           </Provider>
         </SearcherContext.Provider>
       );

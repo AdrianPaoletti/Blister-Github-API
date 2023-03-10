@@ -32,5 +32,25 @@ export const defaultTheme: Theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          padding: "1.15rem",
+          width: "10rem",
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          "&.Mui-selected": {
+            background: "white",
+            "&:hover": {
+              background: "#c6cdd5",
+            },
+          },
+        },
+      },
+    },
   },
 });
