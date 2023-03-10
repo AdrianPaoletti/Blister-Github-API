@@ -1,0 +1,138 @@
+@import "src/styles/mixins";
+@import "src/styles/variables";
+
+.repository-card {
+  border: 0.1rem solid $color-light-gray;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  font-size: $font-size-small;
+  color: $color-medium-gray;
+  height: 25rem;
+  transition: all 0.25s;
+
+  &:hover {
+    background-color: $color-extra-light-gray;
+    border-color: $color-light-blue;
+  }
+
+  &__container {
+    @include display-flex(space-between, initial);
+  }
+
+  &__information {
+    @include display-flex(space-between, initial, column);
+  }
+
+  &__main-information {
+    @include display-flex();
+  }
+
+  &__repo-name {
+    color: $color-blue;
+    font-size: $font-size-normal;
+    max-width: 20rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__user-name {
+    margin: 0 1.5rem;
+    padding: 0 1.5rem;
+    font-weight: 600;
+    border-left: 0.1rem solid $color-light-gray;
+    max-width: 11rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin: 0.6rem 0;
+  }
+
+  &__dates-information {
+    @include display-flex();
+    p {
+      font-size: 1.1rem;
+
+      span {
+        font-weight: 600;
+      }
+
+      &:nth-child(2) {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  &__secondary-information {
+    @include display-flex();
+    margin-top: 2rem;
+  }
+
+  &__language-container {
+    @include display-flex();
+  }
+
+  &__circle-icon {
+    color: $color-orange;
+  }
+
+  &__language {
+    margin-left: 0.5rem;
+  }
+
+  &__stars-container {
+    @include display-flex();
+    margin: 0 1rem;
+  }
+
+  &__stars {
+    margin-left: 0.3rem;
+  }
+
+  &__topics-information {
+    @include display-flex();
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    overflow-y: auto;
+    max-height: 10rem;
+
+    li {
+      padding: 0.5rem;
+      margin: 0 0.5rem 0.5rem 0;
+      font-size: 1.1rem;
+      border: 0.1rem solid $color-light-gray;
+      border-radius: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 10rem;
+    }
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2rem;
+      border: 0.3rem solid $color-orange;
+    }
+  }
+
+  &__image {
+    height: fit-content;
+    margin-left: 0.75rem;
+    img {
+      border-radius: 1rem;
+      object-fit: cover;
+    }
+  }
+
+  &__hidden {
+    display: none;
+  }
+}

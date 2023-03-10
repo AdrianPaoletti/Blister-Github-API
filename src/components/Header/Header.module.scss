@@ -1,0 +1,14 @@
+@import "src/styles/mixins";
+
+.header {
+  @include display-flex(space-between);
+  padding-bottom: 2rem;
+
+  &__searchbar {
+    @include display-flex();
+  }
+
+  &__container-theme {
+    @include display-flex();
+  }
+}
